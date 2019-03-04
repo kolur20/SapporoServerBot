@@ -37,7 +37,7 @@ namespace ServerTelegramBot
 
         private static void MainClass_ClickClose(object sender, EventArgs e)
         {
-            notify.Dispose();
+            //notify.Dispose();
             Application.Exit();
 
         }
