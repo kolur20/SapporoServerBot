@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ServerTelegramBot
 {
@@ -11,6 +12,7 @@ namespace ServerTelegramBot
     {
         static NotifyIcon notify = new NotifyIcon();
         static ContextMenuStrip contextMenu = new ContextMenuStrip();
+        static BackgroundWorker bw = null;
         static void Main()
         {
             ContextMenuStrip contextMenu = new ContextMenuStrip();
@@ -26,10 +28,47 @@ namespace ServerTelegramBot
             notify.Text = "Server BotTelegram";
             notify.ContextMenuStrip = contextMenu;
 
-            
+            //Dialogs.ProxyParser parser = new Dialogs.ProxyParser("http://foxtools.ru/Proxy?country=US&al=True&am=True&ah=True&ahs=True&http=True&https=True");
+
+            bw = new BackgroundWorker();
+            bw.DoWork += Bw_DoWork;//(new Dialogs.RootDialog()).Bw_DoWork;
+            //bw.RunWorkerAsync();
+            bw.RunWorkerAsync(new object[] { Properties.Settings.Default.ApiTelegramBot, "http://34.80.17.221:3128/" });
+            //bw.RunWorkerAsync(new object[] { Properties.Settings.Default.ApiTelegramBot, "http://67.205.132.241:1080/" });
             Application.Run();
         }
+        static private async void Bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker; // получаем ссылку на класс вызвавший событие
 
+            var arg = e.Argument as object[]; // получаем ключ из аргументов
+            try
+            {
+                if (arg == null)
+                {
+                    await (new Dialogs.RootDialog()).MessageReceivedAsync(Properties.Settings.Default.ApiTelegramBot);
+                }
+                else
+                {
+                    await (new Dialogs.RootDialog()).MessageReceivedAsync(arg[0].ToString(), arg[1].ToString());
+                }
+            }
+            catch (Dialogs.ProxyException ex)
+            {
+                //if (Convert.ToInt32(arg[1]) != config.Proxys.Count - 1) bw.RunWorkerAsync(new object[] { arg[0], Convert.ToInt32(arg[1]) + 1, arg[2] });
+                //else MessageBox.Show("Ни одно прокси не оказалось рабочим!\n Возможно проблемы с интернетом!", "Ошибка");
+
+                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+            }
+        }
         private static void MainClass_ClickReload(object sender, EventArgs e)
         {
           
@@ -37,7 +76,7 @@ namespace ServerTelegramBot
 
         private static void MainClass_ClickClose(object sender, EventArgs e)
         {
-            //notify.Dispose();
+            notify.Dispose();
             Application.Exit();
 
         }

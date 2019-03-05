@@ -3,7 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="ApiTelegramBot" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">AAAA</Value>
+      <Value Profile="(Default)">735417885:AAGJDcP9_JE_nmj1-3udCw3fEbxNgiU-t64</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Grin_K</Value>
+    </Setting>
+    <Setting Name="TrackCard" Type="System.String" Scope="User">
+      <Value Profile="(Default)">885531</Value>
+    </Setting>
+    <Setting Name="NameTelegramBot" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HelperSapporo_bot</Value>
     </Setting>
   </Settings>
 </SettingsFile>

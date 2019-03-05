@@ -25,10 +25,46 @@ namespace ServerTelegramBot.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("AAAA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("735417885:AAGJDcP9_JE_nmj1-3udCw3fEbxNgiU-t64")]
         public string ApiTelegramBot {
             get {
                 return ((string)(this["ApiTelegramBot"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Grin_K")]
+        public string UserName {
+            get {
+                return ((string)(this["UserName"]));
+            }
+            set {
+                this["UserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("885531")]
+        public string TrackCard {
+            get {
+                return ((string)(this["TrackCard"]));
+            }
+            set {
+                this["TrackCard"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HelperSapporo_bot")]
+        public string NameTelegramBot {
+            get {
+                return ((string)(this["NameTelegramBot"]));
+            }
+            set {
+                this["NameTelegramBot"] = value;
             }
         }
     }
