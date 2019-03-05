@@ -67,5 +67,17 @@ namespace ServerTelegramBot.Properties {
                 this["NameTelegramBot"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.22.220:8118")]
+        public string WebProxy {
+            get {
+                return ((string)(this["WebProxy"]));
+            }
+            set {
+                this["WebProxy"] = value;
+            }
+        }
     }
 }

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
 
+
 namespace ServerTelegramBot
 {
     static class MainClass
     {
+        static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         static NotifyIcon notify = new NotifyIcon();
         static ContextMenuStrip contextMenu = new ContextMenuStrip();
         static BackgroundWorker bw = null;
@@ -33,7 +35,7 @@ namespace ServerTelegramBot
             bw = new BackgroundWorker();
             bw.DoWork += Bw_DoWork;//(new Dialogs.RootDialog()).Bw_DoWork;
             //bw.RunWorkerAsync();
-            bw.RunWorkerAsync(new object[] { Properties.Settings.Default.ApiTelegramBot, "http://34.80.17.221:3128/" });
+            bw.RunWorkerAsync(new object[] { Properties.Settings.Default.ApiTelegramBot, Properties.Settings.Default.WebProxy });
             //bw.RunWorkerAsync(new object[] { Properties.Settings.Default.ApiTelegramBot, "http://67.205.132.241:1080/" });
             Application.Run();
         }
@@ -46,27 +48,29 @@ namespace ServerTelegramBot
             {
                 if (arg == null)
                 {
-                    await (new Dialogs.RootDialog()).MessageReceivedAsync(Properties.Settings.Default.ApiTelegramBot);
+                    await (new Dialogs.RootDialog(Properties.Settings.Default.NameTelegramBot)).MessageReceivedAsync(Properties.Settings.Default.ApiTelegramBot);
                 }
                 else
                 {
-                    await (new Dialogs.RootDialog()).MessageReceivedAsync(arg[0].ToString(), arg[1].ToString());
+                    await (new Dialogs.RootDialog(Properties.Settings.Default.NameTelegramBot)).MessageReceivedAsync(arg[0].ToString(), arg[1].ToString());
                 }
             }
             catch (Dialogs.ProxyException ex)
             {
                 //if (Convert.ToInt32(arg[1]) != config.Proxys.Count - 1) bw.RunWorkerAsync(new object[] { arg[0], Convert.ToInt32(arg[1]) + 1, arg[2] });
                 //else MessageBox.Show("Ни одно прокси не оказалось рабочим!\n Возможно проблемы с интернетом!", "Ошибка");
-
-                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+                logger.Fatal(ex.Message +"  "+ex.InnerException);
+                //MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
             }
             catch (System.Net.Http.HttpRequestException ex)
             {
-                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+                logger.Fatal(ex.Message + "  " + ex.InnerException);
+                //MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
+                logger.Fatal(ex.Message + "  " + ex.InnerException);
+                //MessageBox.Show(ex.Source + ex.StackTrace, ex.Message);
             }
         }
         private static void MainClass_ClickReload(object sender, EventArgs e)
@@ -78,7 +82,7 @@ namespace ServerTelegramBot
         {
             notify.Dispose();
             Application.Exit();
-
+            logger.Info("Закрытие приложения");
         }
     }
 }

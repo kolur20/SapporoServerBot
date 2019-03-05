@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="CardEmul\KeyboardSend.cs" />
     <Compile Include="CardEmul\Personal.cs" />
-    <Compile Include="Dialogs\ProxyParser.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +82,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\" />

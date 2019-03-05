@@ -14,5 +14,8 @@
     <Setting Name="NameTelegramBot" Type="System.String" Scope="User">
       <Value Profile="(Default)">HelperSapporo_bot</Value>
     </Setting>
+    <Setting Name="WebProxy" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.22.220:8118</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
